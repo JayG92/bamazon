@@ -17,7 +17,7 @@ connection.connect(function (err) {
     start();
   });
 });
-
+let available_stock;
 function start() {
   connection.query("SELECT * FROM products", function (err, data) {
     if (err) throw err;
@@ -45,21 +45,18 @@ function start() {
        
         connection.query("SELECT * FROM products WHERE quantity", function (err, data) {
         });
-        console.log(answer.choices);
-        for (let i = 0; i < data.length; i++) 
-        {
-          if (data[i].id === answer.choices){}
-        }
-        let available_stock = data[0].quantity;
-        if (available_stock >= answer.quanity) {
-          console.log("Order proccessed")
-          start();
-        }
-        else {
-          console.log("Not enough in stock, Please try again!")
-          start();
-        }
-
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].id === answer.id) {
+            available_stock = data[i].quantity;
+          }}
+          if (available_stock >= answer.quanity) {
+            console.log("Order proccessed")
+            console.log("You Ordered: " + answer.quanity + " pairs!")
+         }
+          else {
+            console.log("Not enough in stock, Please try again!")
+          }
+        
       })
   })
 };
